@@ -25,6 +25,7 @@ if __name__ == '__main__':
     pipe = multiprocessing.Pipe()
     # 创建两个子进
     # urls=['url_'+str(i) for i in range(10)]就是url_0到url_9的一个列表
+    # 为什么传递pipe参数需要加0和1？？？
     p1 = multiprocessing.Process(target=proc_send, args=(pipe[0], ['url_'+str(i) for i in range(10)]))
     p2 = multiprocessing.Process(target=proc_recv, args=(pipe[1],))
     # 开始两个子进程
