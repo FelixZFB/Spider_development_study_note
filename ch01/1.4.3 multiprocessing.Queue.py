@@ -1,4 +1,5 @@
 # 在父进程中创建三个子进程
+# 多个进程之间的通信使用Queue
 # 两个子进程向Queue中写入数据
 # 一个子进程从Queue中读取数据
 
@@ -7,7 +8,7 @@ import os, time, random
 
 # 先定义写入和读取的方法
 # 写数据进程, 执行的代
-# Queue实例的put方法，相进程队列中写入url，按循序写入
+# Queue实例的put方法，向进程队列中写入url，按循序写入
 def proc_write(q, urls):
     print("Process(%s) is writing..." % os.getpid())
     for url in urls:
