@@ -9,7 +9,7 @@ r = requests.get('http://seputu.com', headers=headers)
 # print(r.text)
 
 
-# 将网页内容生成一个BS4实例
+# 将网页内容生成一个BS4实例,使用html.parser作为HTML文档的解析器
 soup = BeautifulSoup(r.text, 'html.parser', from_encoding='utf-8')
 content = []
 for mulu in soup.find_all(class_='mulu'):
