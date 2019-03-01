@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# 数据存储器，数据来源于爬虫调度器
+# 数据存储器，数据来源于爬虫调度器SpiderMan
 
 import codecs
 
@@ -14,6 +14,7 @@ class DataOutput(object):
         self.datas.append(data)
 
     def output_html(self):
+        # 本来有的，直接覆盖原文件
         fout = codecs.open('baike.html', 'w', encoding='utf-8')
         fout.write('<html>')
         fout.write('<head>')
