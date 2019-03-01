@@ -22,7 +22,7 @@ class SpiderMan(object):
         # 添加入口的URL，让爬虫开始工作
         self.manager.add_new_url(root_url)
         # 判断url管理器中是否有新的url,同时判断抓取了多少个url
-        while(self.manager.has_new_url() and self.manager.old_url_size()<100):
+        while(self.manager.has_new_url() and self.manager.old_url_size()<50):
             try:
                 # 从url管理器中获取新的url
                 new_url = self.manager.get_new_url()
