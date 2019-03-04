@@ -38,7 +38,8 @@ def return_result_queue():
 
 # 第二步：把上面创建的两个队列注册在网络上，利用register方法
 # callable参数关联了Queue对象，将Queue对象在网络中暴露
-# 第一个参数是注册在网络上队列的名称
+# 第一个参数是注册在网络上队列的名称，取一个新名字，是为了区分注册前后的名称
+
 def test():
     QueueManager.register('get_task_queue', callable=return_task_queue)
     QueueManager.register('get_result_queue', callable=return_result_queue)
@@ -52,7 +53,9 @@ def test():
 
     # 第五步：通过管理实例的方法获访问网络中的Queue对象
     # 即通过网络访问获取任务队列和结果队列,创建了两个Queue实例，
-    task = manager.get_task_queue()
+    # 添加任务到Queue不可以直接对原始的task_queue进行操作，那样就绕过了QueueManager的封装，
+    # 必须通过manager.get_task_queue()获得的Queue接口添加。
+    task = manager.get_task_queue() # get_task_queue()=task_queue=queue.Queue()进行了封装和重新命名
     result = manager.get_result_queue()
     # 第六步：添加任务，获取返回的结果
     # 将任务放到Queue队列中
@@ -62,12 +65,12 @@ def test():
         task.put(n) # 将n放入到任务队列中
     # 从结果队列中取出结果
     print("Try get results...")
-    for i in range(11): # 注意，这里结果队列中取结果设置为11次，总共只有10个任务和10个结果，第10次用量确认队列中是不是已经空了
-        # 总共循环10次，上面放入了10个数字作为任务
-        # 加载一个异常捕获
+    for i in range(11):
+        # 注意，这里结果队列中取结果设置为11次，总共只有10个任务和10个结果，第11次用来确认队列中是不是已经空了
         try:
             r = result.get(timeout=5) # 每次等待5秒，取结果队列中的值
             print("Result: %s" % r)
+        # 加载一个异常捕获
         except queue.Empty:
             print("result queue is empty.")
 

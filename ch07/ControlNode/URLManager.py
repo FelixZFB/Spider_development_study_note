@@ -1,11 +1,13 @@
 # coding: utf-8
 
+# 新的URL集合来自HTML解析器解析出的URL集合
+
 # URL管理器思路：
-# 第一步：判断是否有待取的URL,方法定义为has_new_url
+# 第一步：判断是否有未爬取的URL,方法定义为has_new_url
 # 第二步：添加新的URL到未爬取的URL集合中，方法定义为add_new_url(url)和add_new_urls(urls)
 # 第三步：获取一个未爬取新的URL，方法定义为get_new_url()
-# 第四步：获取未爬取URL集合的大小，方法为new_url_size()
-# 第五步：获取已爬取URL结合的大小，方法为old_url_size()
+# 第四步：获取未爬取URL集合的大小，方法为new_url_size()，获取已爬取URL结合的大小，方法为old_url_size()
+# 第五步：
 
 # 代码进行优化，对URL集合进行序列化操作，减少内存的消耗
 # URL进行MD5处理，可以减少内存消耗
@@ -43,7 +45,7 @@ class UrlManager(object):
 
     def add_new_urls(self, urls):
         '''
-        将新的URL添加到未爬取的URL集合中,参数是一个URL集合或者列表之类
+        将HTML解析得到的新URL集合添加到未爬取的URL集合中,参数是一个URL集合或者列表之类
         注意，页面解析时候，获取的新的URL是一个列表，里面有一个或者多个新URL
         所以先得到新的URL列表，然后调用上面的add_new_url方法,将URL一个一个添加到未爬取的URL集合中
         '''
@@ -53,18 +55,18 @@ class UrlManager(object):
             self.add_new_url(url) # 将url传给add_new_url方法，调用add_new_url方法
 
     def new_url_size(self):
-        '''获取未爬取的URL集合的大小'''
+        '''获取未爬取的URL集合的大小，列表的长度，相当于URL的个数'''
         return len(self.new_urls)
 
     def old_url_size(self):
-        '''获取已经爬取过URL集合的大小'''
+        '''获取已经爬取过URL集合的大小，列表的长度，相当于URL的个数'''
         return len(self.old_urls)
 
     def save_progerss(self, path, data):
         '''
         保存进度,将数据序列化写入文件
-        :param path: 文件路径
-        :param data: 数据
+        :param path: 文件路径,看NodeManager.py，文件路径就是new_urls.txt和old_urls.txt
+        :param data: 数据，就是new_urls和old_urls
         :return:
         '''
         with open(path, 'wb') as f:

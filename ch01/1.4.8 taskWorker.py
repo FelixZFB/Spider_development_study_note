@@ -27,17 +27,19 @@ task = m.get_task_queue()
 result = m.get_result_queue()
 
 # 第四步：从task队列获取任务，并把结果写入到resul队列
-for i in range(10):
+for i in range(50):
     try:
         # 前面服务进程向task队列中放入了n,这里取出n
         # n和n相乘，并将相乘的算式和结果放入到result队列中去
         n = task.get(timeout=1) # 每次等待1秒后取出任务
         print("run task %d * %d..." % (n, n))
         r = '%d * %d = %d' % (n, n, n*n)
-        time.sleep(1)
+        time.sleep(1) # 设置睡眠时间，缓慢输出计算结果
         result.put(r)
     except queue.Empty:
         print("task queue is empty.")
 
 # 任务处理结束
 print("worker exit.")
+
+

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 # 网页下载器，下载获得网页的全部内容
+# 最终返回网页的内容，提交给HTML解析器，解析出需要的东西
 
 import requests
 

@@ -38,12 +38,12 @@ class SpiderWork(object):
                     if url =='end':
                         print('控制节点通知爬虫节点停止工作...')
                         #接着通知其它节点停止工作
-                        self.result.put({'new_urls':'end','data':'end'})
+                        self.result.put({'new_urls': 'end','data': 'end'})
                         return
-                    print('爬虫节点正在解析:%s'%url.encode('utf-8'))
+                    print('爬虫节点正在解析:%s' % url.encode('utf-8'))
                     content = self.downloader.download(url)
-                    new_urls,data = self.parser.parser(url,content)
-                    self.result.put({"new_urls":new_urls,"data":data})
+                    new_urls, data = self.parser.parser(url, content)
+                    self.result.put({"new_urls": new_urls,"data": data})
             except EOFError as e:
                 print("连接工作节点失败")
                 return

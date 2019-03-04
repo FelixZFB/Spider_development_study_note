@@ -1,6 +1,7 @@
 # coding: utf-8
 
-# 数据存储器，数据来源于爬虫调度器(SpiderMan)
+# 数据存储器，数据来自HTML解析出的数据
+# 将获取到的数据写成HTML文件
 # 生成的文件按照当前的时间进行命名，以避免重复，同时对文件进行缓存写入
 # codecs一个编码转换模块
 
@@ -17,7 +18,7 @@ class DataOutput(object):
     def store_data(self, data):
         if data is None:
             return
-        self.datas.append(data) # data来自SpiderMan
+        self.datas.append(data) # data来自SpiderWorker
         if len(self.datas) > 10:
             self.output_html(self.filepath)
 
