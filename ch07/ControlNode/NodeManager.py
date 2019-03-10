@@ -106,7 +106,7 @@ class NodeManager(object):
                     content = result_q.get(True) # 从result_q就是SpiderWork中的self.result队列，里面放置了网页分析后的数据
                     if content['new_urls']=='end':
                         #结果分析进程接受通知然后结束
-                        print('结果分析进程接受通知然后结束!')
+                        print('数据提取进程收到结束通知，立刻结束!')
                         store_q.put('end')
                         return
                     conn_q.put(content['new_urls'])#url为set类型
