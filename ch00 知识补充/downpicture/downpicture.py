@@ -6,7 +6,6 @@
 import requests
 import re
 import time
-import threading
 from bs4 import BeautifulSoup
 
 root_urls = [
@@ -25,7 +24,7 @@ def downpicture():
 
         # 解析网页内容，提取所需的图片网址
         soup = BeautifulSoup(r.text, 'html.parser', from_encoding='utf-8')
-        # 检查原网址，发现网页可以打开的大图片，网址前面部分都是统一的命名规则，找出所有的含有匹配图片链接的标签
+        # 检查原网址，发现网页可以打开的大图片，网址前面部分都是统一的命名规则，找出所有的含有匹配图片链接的a标签
         links = soup.find_all('a', href=re.compile(r'https://b.porngals4.com/media/galleries/.*'))
         urls = []
         for link in links:
@@ -43,7 +42,7 @@ def downpicture():
             t1 = list(str(t))
             filename = ''.join(t1[0:10]) + '.jpg'
             with open(filename, 'wb') as f:
-                f.write(pic.content)
+                f.write(pic.content) # content代表图片的值
             print(filename + "下载完成")
 
 
