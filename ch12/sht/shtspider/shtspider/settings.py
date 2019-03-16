@@ -66,7 +66,20 @@ ROBOTSTXT_OBEY = True
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'shtspider.pipelines.ShtspiderPipeline': 300,
+    'shtspider.pipelines.MyImagesPipeline': 1,
+
 }
+
+# 上面添加了ImagesPipeline用于下载图片
+# 设置图片的下载地址，图片地址，文件结果信息，制作缩略图
+IMAGES_STORE = 'D:\Hello World\python_work\Spider_development_study_note\ch12\sht\shtimages'
+IMAGES_URLS_FIELD = 'image_urls'
+IMAGES_REULT_FIELD = 'images'
+IMAGES_THUMBS = {
+    'small': (50, 50),
+    'big': (270, 270),
+}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

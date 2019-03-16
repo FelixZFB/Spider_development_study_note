@@ -75,7 +75,7 @@ ITEM_PIPELINES = {
 
 # 上面添加了ImagesPipeline用于下载图片
 # 设置图片的下载地址，图片地址，文件结果信息，制作缩略图
-IMAGES_STORE = 'D:\Hello World\python_work\Spider_development_study_note\ch12\cnblogs'
+IMAGES_STORE = 'D:\Hello World\python_work\Spider_development_study_note\ch12\cnblogSpider\cnblogimages'
 IMAGES_URLS_FIELD = 'cimage_urls'
 IMAGES_REULT_FIELD = 'cimages'
 IMAGES_THUMBS = {
