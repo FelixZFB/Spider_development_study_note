@@ -26,6 +26,11 @@ class CnblogsSpider(scrapy.Spider):
         # 分析原文可以发现，每一篇文章都是放在，<div class="day"> </div>标签里面
         # 选取的结果就是一个列表，就是多篇文章
         papers = response.xpath(".//*[@class='day']")
+
+        # 加入调试查看命令,可以分布查看每一次爬行的结果
+        # from scrapy.shell import inspect_response
+        # inspect_response(response, self)
+
         # 从每篇文章中抽取数据
         for paper in papers:
             # 提取出一篇文章的地址，标题，时间，和内容（就是标题）
@@ -48,7 +53,9 @@ class CnblogsSpider(scrapy.Spider):
             request = scrapy.Request(url=url, meta={'item': item}, callback=self.parse_body)
 
             # 将parse打造成一个生成器,生成item，经过循环之后会生成很多item字典对象
-            yield request # 函数生成器，相当于return返回request的值，request执行了parse_body方法，得到的就是一个item
+            # 函数生成器，相当于return返回request请求对象的值，上面的request执行了parse_body方法，
+            # 最终得到的就是一个item字典对象，实际返回的就是一个容器，里面存储着分析网页得到的各种数据
+            yield request
 
         next_page = Selector(response).re(u'<a href="(\S*)">下一页</a>')
         if next_page:
@@ -66,7 +73,7 @@ class CnblogsSpider(scrapy.Spider):
         # 找出了文章正文，然后匹配里面所有的图片链接
         # 下面表达式含义，从body元素节点开始匹配，找出所有的img元素下所有的src图片链接属性的值
         # extract()提取所有的内容，extract_first()和extract()[0]用来提取第一个内容，有时候一个标签下面有很多文字内容
-        item['cimage_urls'] = body.xpath(".//img//@src").extract()
+        item['image_urls'] = body.xpath(".//img//@src").extract()
         yield item # 函数生成器，相当于返回item对象（该处也可写成return item）
 
 

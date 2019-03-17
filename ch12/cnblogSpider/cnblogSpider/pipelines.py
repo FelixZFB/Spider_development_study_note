@@ -13,13 +13,13 @@ from scrapy.exceptions import DropItem
 
 class CnblogspiderPipeline(object):
     def __init__(self):
-        self.file = open('papers.json', 'w')
+        self.file = open('papers.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         # 判断item字典对象中title对应的是否还有值
         if item['title']:
             # 将item字典类型的数据转换成json格式的字符串
-            line = json.dumps(dict(item)) + "\n"
+            line = json.dumps(dict(item), ensure_ascii=False) + "\n"
             self.file.write(line)
             return item
         else:
