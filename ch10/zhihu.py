@@ -25,8 +25,8 @@ from PIL import Image
 class ZhihuAccount(object):
 
     def __init__(self, username: str = None, password: str = None):
-        self.username = username
-        self.password = password
+        self.username = '18200116656'
+        self.password = 'zfb123456zfb'
 
         self.login_data = {
             'client_id': 'c3cef7c66a1843f8b3a9e6a1e3160e20',

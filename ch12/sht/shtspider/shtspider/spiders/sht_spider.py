@@ -6,13 +6,28 @@ from scrapy.utils.project import get_project_settings
 from bs4 import BeautifulSoup
 from shtspider.items import ShtspiderItem
 
-class ShtSpider(scrapy.Spider):
+# 打造分布式爬虫
+from scrapy_redis.spiders import RedisSpider
+
+# class ShtSpider(scrapy.Spider):
+
+class ShtSpider(RedisSpider):
     name = 'sht'
     allowed_domains = ['dsndsht23.com']
+
+    # 网站更新后，只需要爬取某几页，可以将要爬取的页面放到开始网址中，然后关掉下面下一页的功能
+    '''
     start_urls = [
         'https://www.dsndsht23.com/forum-103-1.html',
         'https://www.dsndsht23.com/forum-104-1.html',
+        'https://www.dsndsht23.com/forum-2-1.html',
     ]
+    '''
+    # RedisSpider不需要上面的start_urls，需要设置一个键的名称
+    # 打开CMD窗口，运行redis-cli连接到本地的redis-server
+    # 设置起始URL的键和值
+    # 127.0.0.1:6379> lpush sht:start_urls https://www.dsndsht23.com/forum-103-1.html
+    redis_key = 'sht:start_urls'
 
     def parse(self, response):
         soup = BeautifulSoup(response.text, 'html.parser', from_encoding='utf-8')
@@ -30,7 +45,7 @@ class ShtSpider(scrapy.Spider):
             request = scrapy.Request(url=url, meta={'item': item}, callback=self.parse_body)
             yield request
 
-
+        '''
         next_page = soup.find('a', class_="nxt")
         next_page_url = 'https://www.dsndsht23.com/' + next_page['href']
         try:
@@ -38,6 +53,7 @@ class ShtSpider(scrapy.Spider):
                 yield scrapy.Request(url=next_page_url, callback=self.parse)
         except Exception:
             print("所有主页面爬取结束！")
+        '''
 
 
     def parse_body(self, response):

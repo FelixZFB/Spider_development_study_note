@@ -65,6 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+    'scrapy_redis.pipelines.RedisPipeline':301,
     'shtspider.pipelines.ShtspiderPipeline': 300,
     'shtspider.pipelines.MyImagesPipeline': 1,
 
@@ -101,3 +102,27 @@ IMAGES_THUMBS = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 使用scrapy_redis的调度器，
+# 启动爬虫前需要先CMD启动本地的redis-server，然后处于打开状态，然后再运行爬虫
+# 第一遍运行后，已经爬取过的数据都会存储在redis数据库中，然后再次运行，由于都是爬取过的，爬虫会迅速结束，
+# 有新的内容才会继续爬取
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+# （可选参数）在Redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复
+SCHEDULER_PERSIST = True
+# 使用scrapy_redis的去重方式
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+# 使用scrapy_redis的存储方式,见上面ITEM_PIPELINES，并将顺序设置成最后一个，用于存储下载所有的数据
+# 定义Redis的IP和端口
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
+# 注意，改造成分布式爬虫后，传人URL，已经爬取过的ITEM会存储在本地服务器中
+# 可以在redis中输入keys * 查看所有的键
+# 使用flushall可以删除所有本地所有的键值数据
+# 删除数据后再次传入起始URL，然后启动爬虫，就可以开始爬取
+# 注意：分布式爬虫，redis服务器一直处于运行状态，爬虫不会自己结束，
+# 可以向服务器一直传入新的URL，然后爬虫会自动继续爬取新的URL，重复的会自动跳过
+# 爬取完成后，手动结束爬虫程序即可
+
+
