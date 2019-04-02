@@ -4,6 +4,8 @@
 # 第一层解析：找出该页面所有的文章的URL和标题
 # 第二层解析：打开一个第一层解析得到的URL地址，得到里面的图片地址和magnet的值
 
+# 解析sht相关网页
+
 import scrapy
 import re
 import requests
@@ -57,8 +59,6 @@ class Wangye2Spider(scrapy.Spider):
         # magnet_url = magnet.get_text()
         magnet_url = magnet.string
         print(magnet_url)
-
-
 
 if __name__ == '__main__':
     process = CrawlerProcess(get_project_settings())

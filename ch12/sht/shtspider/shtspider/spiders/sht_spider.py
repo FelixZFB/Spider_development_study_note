@@ -24,9 +24,12 @@ class ShtSpider(RedisSpider):
     ]
     '''
     # RedisSpider不需要上面的start_urls，需要设置一个键的名称
+    # 先打开一个CMD窗口，启动本地的redis-server，然后处于打开状状态
     # 打开CMD窗口，运行redis-cli连接到本地的redis-server
-    # 设置起始URL的键和值
+    # 设置起始URL的键和值，爬虫中只需设置键的名称，然后进入CMD窗口输入键和值，值就是起始URL
     # 127.0.0.1:6379> lpush sht:start_urls https://www.dsndsht23.com/forum-103-1.html
+    # 然后启动主爬虫，爬取就开始了
+    # 一个网址爬取结束后，向里面再次传入新的URL就可以继续爬取
     redis_key = 'sht:start_urls'
 
     def parse(self, response):
