@@ -14,6 +14,7 @@ class YunqiQqComSpider(CrawlSpider):
     # 先查看书库：http://yunqi.qq.com/bk，然后向后面点几页，发现网址就是p后面的页码不同
     start_urls = ['http://yunqi.qq.com/bk/so2/n30p1']
 
+    # 将书库网址规律加入到规则中，会自动爬取满足规律的所有网址，每个网址都调用parse_book_list方法进行解析
     rules = (
         Rule(LinkExtractor(allow=r'/bk/so2/n30p\d+'), callback='parse_book_list', follow=True),
     )

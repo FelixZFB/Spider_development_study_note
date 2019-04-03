@@ -101,6 +101,32 @@ USER_AGENTS = [
 HTTP_PROXY ='http://127.0.0.1:8118'
 
 
+
+#使用scrapy_redis的中的调度器，注意运行爬虫前，启动本地的redis-server服务器
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 在redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复
+SCHEDULER_PERSIST = True
+#使用scrapy_redis的去重方式
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# DUPEFILTER_CLASS = "yunqiCrawl.bloomFilterOnRedis.bloomRedisFilter.bloomRedisFilter"
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
+
+
+# 以下去重方法未成功
+# 使用scrapy_redis文件夹中的调度器
+# SCHEDULER = "yunqiCrawl.scrapy_redis.scheduler.Scheduler"
+# SCHEDULER_QUEUE_CLASS = 'yunqiCrawl.scrapy_redis.queue.SpiderPriorityQueue'
+# 去重队列的信息
+# FILTER_URL = None
+# FILTER_HOST = 'localhost'
+# FILTER_PORT = 6379
+# FILTER_DB = 0
+
+
+
+
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -120,6 +146,15 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 
+# 设置MongoDB相关配置，用于连接数据库，存储数据，注意，启动爬虫前，先要启动MongoDB集群
+# mongoDB用于数据存储，设置用于存储的数据库节点port接口
+MONGO_URI = 'mongodb://127.0.0.1:1111,127.0.0.1:2222,127.0.0.1:3333'
+# 数据库名称
+MONGO_DATABASE='yunqi'
+# 副本集名称，统一的的id
+REPLICASET = 'test'
+
+
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -135,12 +170,15 @@ ITEM_PIPELINES = {
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 # NOTE: AutoThrottle will honour the standard settings for concurrency and delay
-# 启动自动限速
+
+
+# 启动自动下载限速，减少被封概率
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
 AUTOTHROTTLE_MAX_DELAY = 60
+
 
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
