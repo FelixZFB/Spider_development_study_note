@@ -10,7 +10,7 @@ class YunqiSpider(scrapy.Spider):
     start_urls = ['http://yunqi.qq.com/bk/gdyq/24114533.html']
 
     def parse(self, response):
-        # .从根节点开始选取，//不管在什么位置，div的class属性为book的所有div标签
+        # .选取当前节点，//不管在什么位置，div的class属性为book的所有div标签
         novelLabel = response.xpath(".//div[@class='tags']/text()").extract_first()
         # 总人气选择，可以使用以下两种选取方法
         # *代表选取文档中的所有元素，*[@id='novelInfo']选取文档所有id属性为novelInfo的元素

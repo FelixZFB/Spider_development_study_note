@@ -20,16 +20,17 @@ class YunqiQqComSpider(CrawlSpider):
     )
 
     def parse_book_list(self, response):
-        # 详细解析参考ch00知识补充-网页解析-yunqishuyuan1_Spider.py
+        # 详细解析参考ch00知识补充-04-网页解析验证-yunqishuyuan1_Spider.py
         # 下面的两种方法选取的结果一样
-        # .从根节点开始选取，//不管在什么位置，div的class属性为book的所有div标签
+        # .选取当前节点，//不管在什么位置，div的class属性为book的所有div标签
         # books = response.xpath(".//div[@class='book']")
-        # .从根节点开始选取，//不管在什么位置，*代表所有的class属性为book的所有标签
+        # .选取当前节点，//不管在什么位置，*代表所有的class属性为book的所有标签
         # books = response.xpath(".//*[@class='book']")
         books = response.xpath(".//div[@class='book']")
 
         for book in books:
 
+            # .选取当前节点,/从根节点开始选取，/符号连续使用就是逐级向下选择
             novelImageUrl = book.xpath("./a/img/@src").extract_first()
             novelId = book.xpath("./div[@class='book_info']/h3/a/@id").extract_first()
             novelName = book.xpath("./div[@class='book_info']/h3/a/text()").extract_first()
@@ -69,7 +70,7 @@ class YunqiQqComSpider(CrawlSpider):
             yield request
 
     def parse_book_detail(self, response):
-        # 解析一本书的详细信息，参考ch00知识补充-网页解析-yunqishuyuan2_Spider.py
+        # 解析一本书的详细信息，参考ch00知识补充-04-网页解析验证-yunqishuyuan2_Spider.py
         novelId = response.meta['novelId']
         # .从根节点开始选取，//不管在什么位置，div的class属性为book的所有div标签
         novelLabel = response.xpath(".//div[@class='tags']/text()").extract_first()

@@ -5,8 +5,8 @@ import docx
 
 # 由于文件中有多行，直接读取会出现错误，因此一行一行读取
 def read_json():
-    # 读取json文件，加入到列表中
-    file = open("papers.json", 'r', encoding='utf-8')
+    # 读取json文件，加入到列表中,注意文件名称前面加一个r,去掉\作为转义符的含义，有时候需要路径打开要使用\
+    file = open(r'papers.json', 'r', encoding='utf-8')
     papers = []
     for line in file.readlines():
         dic = json.loads(line)

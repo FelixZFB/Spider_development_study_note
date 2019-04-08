@@ -18,18 +18,20 @@ class YunqiSpider(scrapy.Spider):
         # 查看ch17中的云起书院-书本清单解析1
 
         # 下面的两种方法选取的结果一样
-        # .从根节点开始选取，//不管在什么位置，div的class属性为book的所有div标签
+        # .选取当前节点，//不管在什么位置，div的class属性为book的所有div标签
         books1 = response.xpath(".//div[@class='book']")
         print(len(books1))
         print(books1[10])
 
-        # .从根节点开始选取，//不管在什么位置，*代表所有的class属性为book的所有标签
+        # .选取当前节点，//不管在什么位置，*代表所有的class属性为book的所有标签
         books2 = response.xpath(".//*[@class='book']")
         print(len(books2))
         print(books2[10])
 
 
         for book in books2[0:1]:
+
+            # .选取当前节点,/从根节点开始选取，/符号连续使用就是逐级向下选择
             novelImageUrl = book.xpath("./a/img/@src").extract_first()
             novelId = book.xpath("./div[@class='book_info']/h3/a/@id").extract_first()
             novelName = book.xpath("./div[@class='book_info']/h3/a/text()").extract_first()

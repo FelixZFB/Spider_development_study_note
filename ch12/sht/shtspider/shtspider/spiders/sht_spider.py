@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# 一个福利网站资源爬取
+
 import scrapy
 import re
 from urllib.parse import urljoin
@@ -27,7 +30,9 @@ class ShtSpider(RedisSpider):
     # 先打开一个CMD窗口，启动本地的redis-server，然后处于打开状状态
     # 打开CMD窗口，运行redis-cli连接到本地的redis-server
     # 设置起始URL的键和值，爬虫中只需设置键的名称，然后进入CMD窗口输入键和值，值就是起始URL
-    # 127.0.0.1:6379> lpush sht:start_urls https://www.dsndsht23.com/forum-103-1.html
+    # 127.0.0.1:6379> lpush sht:start_urls https://www.dsndsht23.com/forum-103-1.html   高清中文字幕
+    # lpush sht:start_urls https://www.dsndsht23.com/forum-2-1.html  国产原创
+    # lpush sht:start_urls https://www.dsndsht23.com/forum-107-1.html  三级写真
     # 然后启动主爬虫，爬取就开始了
     # 一个网址爬取结束后，向里面再次传入新的URL就可以继续爬取
     redis_key = 'sht:start_urls'
@@ -48,7 +53,7 @@ class ShtSpider(RedisSpider):
             request = scrapy.Request(url=url, meta={'item': item}, callback=self.parse_body)
             yield request
 
-        '''
+        # 爬取下一页
         next_page = soup.find('a', class_="nxt")
         next_page_url = 'https://www.dsndsht23.com/' + next_page['href']
         try:
@@ -56,7 +61,7 @@ class ShtSpider(RedisSpider):
                 yield scrapy.Request(url=next_page_url, callback=self.parse)
         except Exception:
             print("所有主页面爬取结束！")
-        '''
+
 
 
     def parse_body(self, response):
