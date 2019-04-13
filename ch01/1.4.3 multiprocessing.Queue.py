@@ -14,8 +14,8 @@ def proc_write(q, urls):
     for url in urls:
         q.put(url)
         print("Put %s to queue..." % url)
-        time.sleep(random.random())
-        # time.sleep(5)
+        # time.sleep(random.random())
+        time.sleep(10)
 
 
 # 读数据进程, 执行的代码
@@ -32,6 +32,7 @@ if __name__ == '__main__':
     # 父进程创建Queue,并传给各个子进程
     # 创建一个Queue的实例
     q = Queue()
+    # 传入两个参数，q和一个URL列表就是上面的urls
     proc_writer1 = Process(target= proc_write, args=(q,['url_1', 'url_2', 'url_3']))
     proc_writer2 = Process(target= proc_write, args=(q,['url_4', 'url_5', 'url_6']))
     proc_reader = Process(target=proc_read, args=(q,))
@@ -48,9 +49,9 @@ if __name__ == '__main__':
 
 # 查看运行结果
 # 先启动了写入函数的进程，运行了两个写入函数，
-# 同时分别向队列中写入了url列表中的第一个url
-# 然后读取函数启动了，一起取出了前面写入的两个url
-# 然后执行写入，取出
+# 同时分别向队列中写入了url列表中的第一个url，先存入1和4
+# 然后读取函数启动了，一起取出了前面写入的两个url，取出了1和4
+# 然后执行写入2和5，取出2和5
 # 写入函数的两个进程执行结束，但是取出函数一直是真，会不断循环
 # 但是队列中已经没有url可以取出了，程序不会停止，因此加上的强制终止代码
 # 强制终止代码去掉，程序不会停止

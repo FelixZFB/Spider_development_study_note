@@ -1,13 +1,13 @@
 # 由于IO操作非常耗时，程序经常会处于等待状态
 # 比如请求多个网页有时候需要等待，gevent可以自动切换协程
 # 遇到阻塞自动切换协程，程序启动时执行monkey.patch_all()解决
-# 多个协程，可以采用pool管理并发数
-
+# 多个协程，可以采用pool管理并发数，限制并发任务数
 
 from gevent import monkey
 monkey.patch_all()
 from urllib import request
 from gevent.pool import Pool
+
 def run_task(url):
     print("Visit --> %s" % url)
     try:

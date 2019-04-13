@@ -36,7 +36,7 @@ def return_result_queue():
     global result_queue
     return result_queue # 返回接收结果的队列
 
-# 第二步：把上面创建的两个队列注册在网络上，利用register方法
+# 第二步：把上面创建的两个队列注册在网络上，利用register方法,相当于将队列封装到manager管理器中
 # callable参数关联了Queue对象，将Queue对象在网络中暴露
 # 第一个参数是注册在网络上队列的名称，取一个新名字，是为了区分注册前后的名称
 
@@ -44,7 +44,7 @@ def test():
     QueueManager.register('get_task_queue', callable=return_task_queue)
     QueueManager.register('get_result_queue', callable=return_result_queue)
 
-    # 第三步：绑定端口8001，设置验证口令,这个相当于对象的初始化
+    # 第三步：创建一个管理器实例，绑定端口8001，设置验证口令,这个相当于对象的初始化
     # 绑定端口并填写验证口令，windows下需要填写IP地址，Linux下默认为本地，地址为空
     manager = QueueManager(address=('127.0.0.1', 8001), authkey=b'abc') # 口令必须写成类似b'abc'形式，只写'abc'运行错误
 
@@ -55,7 +55,7 @@ def test():
     # 即通过网络访问获取任务队列和结果队列,创建了两个Queue实例，
     # 添加任务到Queue不可以直接对原始的task_queue进行操作，那样就绕过了QueueManager的封装，
     # 必须通过manager.get_task_queue()获得的Queue接口添加。
-    task = manager.get_task_queue() # get_task_queue()=task_queue=queue.Queue()进行了封装和重新命名
+    task = manager.get_task_queue() # get_task_queue()=task_queue=queue.Queue()进行了封装和重新命名之后的接口
     result = manager.get_result_queue()
     # 第六步：添加任务，获取返回的结果
     # 将任务放到Queue队列中

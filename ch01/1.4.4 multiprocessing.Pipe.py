@@ -34,4 +34,6 @@ if __name__ == '__main__':
     # 等待两个子进程执行完毕
     p1.join()
     p2.join()
+    p1.close()
+    p2.close()
 

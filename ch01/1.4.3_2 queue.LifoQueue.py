@@ -1,5 +1,6 @@
 import queue
 
+# 后进先出
 q = queue.LifoQueue()
 
 for i in range(5):
