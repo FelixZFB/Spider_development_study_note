@@ -27,12 +27,13 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
+
+# 反爬虫措施
 # 启动自动限速
 DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
-
 # Disable cookies (enabled by default)
 # 禁用Cookies
 COOKIES_ENABLED = False
@@ -46,6 +47,8 @@ COOKIES_ENABLED = False
 #   'Accept-Language': 'en',
 #}
 
+
+# 反爬虫措施：使用自定义请求头和随机用户代理
 # 自定义请求头部信息
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -97,11 +100,12 @@ USER_AGENTS = [
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10"
 ]
 
+
 # 使用IP代理
 HTTP_PROXY ='http://127.0.0.1:8118'
 
 
-
+# 使用scrapy_redis去重优化
 #使用scrapy_redis的中的调度器，注意运行爬虫前，启动本地的redis-server服务器
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # 在redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复
@@ -114,7 +118,7 @@ REDIS_PORT = 6379
 
 
 
-# 以下去重方法未成功
+# 以下去重方法未成功，下载的去重文件夹
 # 使用scrapy_redis文件夹中的调度器
 # SCHEDULER = "yunqiCrawl.scrapy_redis.scheduler.Scheduler"
 # SCHEDULER_QUEUE_CLASS = 'yunqiCrawl.scrapy_redis.queue.SpiderPriorityQueue'
@@ -146,10 +150,11 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 
+
 # 设置MongoDB相关配置，用于连接数据库，存储数据，注意，启动爬虫前，先要启动MongoDB集群
 # mongoDB用于数据存储，设置用于存储的数据库节点port接口
 MONGO_URI = 'mongodb://127.0.0.1:1111,127.0.0.1:2222,127.0.0.1:3333'
-# 数据库名称
+# 副本集中的数据库名称
 MONGO_DATABASE='yunqi'
 # 副本集名称，统一的的id
 REPLICASET = 'test'
@@ -172,6 +177,7 @@ ITEM_PIPELINES = {
 # NOTE: AutoThrottle will honour the standard settings for concurrency and delay
 
 
+# 反爬虫措施
 # 启动自动下载限速，减少被封概率
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay

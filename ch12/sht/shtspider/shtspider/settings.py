@@ -71,6 +71,7 @@ ITEM_PIPELINES = {
 
 }
 
+# ShtspiderPipeline用于下载ITEM中的文字数据到本地
 # 上面添加了ImagesPipeline用于下载图片
 # 设置图片的下载地址，图片地址，文件结果信息，制作缩略图
 IMAGES_STORE = 'D:\Hello World\python_work\Spider_development_study_note\ch12\sht\shtimages'

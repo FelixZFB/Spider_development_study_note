@@ -46,6 +46,7 @@ class YunqicrawlPipeline(object):
         :param item:
         :return:
         '''
+        # 向数据库yunqi中的bookInfo表中插入item数据
         self.db.bookInfo.insert(dict(item))
 
     def _process_bookeDetail_item(self, item):

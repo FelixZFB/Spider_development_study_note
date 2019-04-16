@@ -14,13 +14,14 @@ class YunqiQqComSpider(CrawlSpider):
     # 先查看书库：http://yunqi.qq.com/bk，然后向后面点几页，发现网址就是p后面的页码不同
     start_urls = ['http://yunqi.qq.com/bk/so2/n30p1']
 
-    # 将书库网址规律加入到规则中，会自动爬取满足规律的所有网址，每个网址都调用parse_book_list方法进行解析
+    # 将书库网址规律加入到规则中，会自动爬取满足规律的所有网址，和以前的解析下一页类似，
+    # 每个网址都回调parse_book_list方法进行解析
     rules = (
         Rule(LinkExtractor(allow=r'/bk/so2/n30p\d+'), callback='parse_book_list', follow=True),
     )
 
     def parse_book_list(self, response):
-        # 详细解析参考ch00知识补充-04-网页解析验证-yunqishuyuan1_Spider.py
+        # 详细解析参考ch00知识补充-04-网页解析验证，包含各种解析方法只用技巧，经常反复看-yunqishuyuan1_Spider.py
         # 下面的两种方法选取的结果一样
         # .选取当前节点，//不管在什么位置，div的class属性为book的所有div标签
         # books = response.xpath(".//div[@class='book']")
@@ -70,7 +71,7 @@ class YunqiQqComSpider(CrawlSpider):
             yield request
 
     def parse_book_detail(self, response):
-        # 解析一本书的详细信息，参考ch00知识补充-04-网页解析验证-yunqishuyuan2_Spider.py
+        # 解析一本书的详细信息，参考ch00知识补充-04-网页解析验证，包含各种解析方法只用技巧，经常反复看-yunqishuyuan2_Spider.py
         novelId = response.meta['novelId']
         # .从根节点开始选取，//不管在什么位置，div的class属性为book的所有div标签
         novelLabel = response.xpath(".//div[@class='tags']/text()").extract_first()

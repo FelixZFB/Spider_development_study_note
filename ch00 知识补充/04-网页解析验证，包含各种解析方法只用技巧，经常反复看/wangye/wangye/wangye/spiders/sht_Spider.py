@@ -30,6 +30,7 @@ class Wangye2Spider(scrapy.Spider):
             page_url = 'https://www.dsndsht23.com/'
             full_url = urljoin(page_url, url)
             # full_url = 'https://www.dsndsht23.com/' + url
+            # 获取标签里面的文字内容，就是文章的标题
             title = paper.get_text()
             print(full_url, title)
 

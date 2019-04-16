@@ -341,7 +341,7 @@
 - 第四步：初始化副本集
     - 创建一个配置文件，在配置文件中列出每一个成员，
     - 让他们每个人都知道知道彼此的存在(第二次启动及以后就不需要再配置)
-    - 先使用一个空的数据库test,就是第二步启动服务器--replSet后面的名称
+    - 先使用一个空的数据库test（自带的默认数据库）,注意：第二步启动服务器--replSet后面的名称(test)是副本集的名称
     - 然后再输入配置文件，然后初始化配置文件
     - 具体命令依次如下,没输入依次命令，按下Enter(config_test会转变为swconfig_test)：
     - use test
@@ -405,6 +405,26 @@
     - config.members[3].host="127.0.0.1:5555"
     - rs.reconfig(config)
     - 参考图片：1615
+    
+- yunqi书院
+    - 连接到主服务器
+    - show dbs 显示说有数据库
+    - use yunqi 使用yunqi数据库
+    - show tables 显示里面所有的数据集
+
+    - 运行结果如下   
+    test:PRIMARY> show dbs
+    admin   0.000GB
+    config  0.000GB
+    local   0.001GB
+    test    0.000GB
+    yunqi   0.001GB
+    test:PRIMARY> use yunqi
+    switched to db yunqi
+    test:PRIMARY> show tables
+    bookInfo
+    bookhot
+    test:PRIMARY>
      
     
     
