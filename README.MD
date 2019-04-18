@@ -322,7 +322,7 @@
     - mongod --port 1111 --dbpath H:\mongo1\data --replSet test --logappend
     - 打开第二个CMD窗口，执行以下命令，启动第二个mongodb服务器
     - mongod --port 2222 --dbpath H:\mongo2\data --replSet test --logappend
-    - 打开第三个CMD窗口，执行以下命令，启动第三个mongodb服务器/';lm;m lk
+    - 打开第三个CMD窗口，执行以下命令，启动第三个mongodb服务器
     - mongod --port 3333 --dbpath H:\mongo3\data --replSet test --logappend
     - 第一个mongodb服务器启动成功后会显示一些系统版本之类的信息
     - 第二个和第三个mongodb服务器启动后，CMD窗口最后一句命令中会显示port接口和等待连接的信息
